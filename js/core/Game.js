@@ -46,7 +46,6 @@ class Game {
 
         // Navball
         this.navball = new Navball(document.getElementById('navball'));
-        this.telemetry = new TelemetrySystem();
         this.missionLog = new MissionLog();
         this.sas = new SAS();
 
