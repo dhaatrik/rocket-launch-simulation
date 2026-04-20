@@ -1,91 +1,126 @@
-# Realistic Orbital Launch Simulation v2.0
+# 🚀 Realistic Orbital Launch Simulation v2.1
 
-A high-fidelity, "best-in-class" web-based physics simulation of an orbital launch vehicle. This project has been upgraded from a simple prototype to a robust simulator featuring **RK4 integration**, **PID autopilots**, **Keplerian orbital mapping**, and **cinema-quality visuals**.
+> A high-fidelity, best-in-class web-based physics simulation of an orbital launch vehicle featuring RK4 integration, PID autopilots, and Keplerian orbital mapping.
 
-Built with HTML5 Canvas and vanilla JavaScript (no external libraries).
+## 📖 Table of Contents
+- [About the Project](#-about-the-project)
+- [Key Features](#-key-features)
+- [Technologies Used](#-technologies-used)
+- [Installation & Requirements](#-installation--requirements)
+- [Usage Instructions & Examples](#-usage-instructions--examples)
+- [Testing Instructions](#-testing-instructions)
+- [Contribution Guidelines](#-contribution-guidelines)
+- [License](#-license)
 
-## 🌟 New "Best-in-Class" Features
+## 🌌 About the Project
 
-### 🛠 UI/UX Enhancements
-*   **Navball (Attitude Indicator):** A fully functional aviation-style Navball showing the rocket's orientation relative to the horizon and the **Prograde Vector** (velocity direction), essential for precise gravity turns.
-*   **Vehicle Assembly Building (VAB):** An interactive "No-Code" configurator before launch. Tweak **Fuel Mass**, **Thrust Limits**, and **Aerodynamics** via sliders to design your own rocket variants without editing code.
-*   **Mobile-Responsive Touch Controls:** Full support for mobile devices with an on-screen virtual joystick for gimbal control and a touch slider for throttle.
-*   **Mission Event Log:** A scrolling timeline that automatically logs critical mission milestones like "LIFTOFF", "SUPERSONIC", "MAX Q", and "MECO".
+The Realistic Orbital Launch Simulation is a robust web-based application designed to accurately simulate launch vehicle mechanics. Created to bridge the gap between simple 2D games and heavy desktop simulators, this project brings cinema-quality visuals and deep physics directly into the browser. 
 
-### ⚛️ Deep Physics & Simulation
-*   **Runge-Kutta 4 (RK4) Solver:** Upgraded from simple Euler integration to RK4, allowing for extreme precision and stability even at high time-warps (up to 10x).
-*   **PID Autopilot:** A Flight Computer that can autonomously land the booster. It uses a **PID Controller** for attitude stability and calculates a precise **Suicide Burn** to reach 0 m/s exactly at ground level.
-*   **Orbital Map Mode:** A dedicated "Map View" (Toggle `M`) displaying the Earth and the rocket's predicted orbital path/trajectory using real Keplerian mechanics.
-*   **Structural & Thermal Damage:** A dynamic health system. High dynamic pressure (`Max Q`) combined with aggressive angles of attack will tear the rocket apart.
+It solves the problem of accessible aerospace simulation by providing a lightweight, yet mathematically rigorous environment for exploring rocketry concepts like gravity turns, staging, and precision landing without the need for extensive plugins or installations. Vanilla JavaScript was chosen to maximize performance and demonstrate the raw capabilities of the HTML5 Canvas API without external library overhead.
 
-### 🎨 Visuals & Immersion
-*   **Bloom Post-Processing:** A custom rendering pass that draws engine flames to an off-screen buffer, blurs them, and composites them with a `screen` blend mode for blindingly bright, realistic engine glow.
-*   **Audio Callouts:** Integrated Text-to-Speech (TTS) for mission control voiceovers ("Liftoff", "Supersonic", "Max Q").
-*   **Motion Blur:** Subtle alpha-based trail effects to convey speed.
+## ✨ Key Features
 
-### v2.1 Update: High-Fidelity Physics & Audio
-*   **Fixed Timestep Loop:** Simulation now runs at a deterministic 60Hz independent of frame rate, ensuring consistent physics on all devices.
-*   **Dynamic Audio Engine:**
-    *   **Pitch Modulation:** Engine sound screams higher as you gain velocity (Doppler/Stress effect).
-    *   **Atmospheric Damping:** Sound fades into a deep rumble as you leave the atmosphere, becoming silent in the vacuum of space.
-*   **Optimized Keplerian Map:** Map View (M) now uses a cached orbit prediction algorithm, massively reducing CPU usage while maintaining 200-step prediction accuracy.
-*   **Code Architecture:** Refactored into a clean `Game` class architecture with a dedicated `InputManager` supporting unified Keyboard/Touch handling.
+- **Advanced Physics Engine:** Uses a Runge-Kutta 4 (RK4) Solver running on a 60Hz fixed timestep for extreme precision, stability, and deterministic physics up to 10x time-warp.
+- **Flight Computer & Autopilot:** Features a PID Controller that can autonomously stabilize attitude and execute a precise, calculated Suicide Burn to safely land the booster.
+- **Interactive VAB (Vehicle Assembly Building):** A no-code visual configurator allowing customized fuel mass, thrust limits, and aerodynamic profiles.
+- **Orbital Map Mode:** A real-time Keplerian trajectory predictor with an optimized caching algorithm.
+- **Dynamic Visuals & Audio:** Includes bloom post-processing, atmospheric scattering, text-to-speech mission callouts, and dynamic atmospheric Doppler audio damping.
 
-### 🎨 v2.1 Visual Overhaul
-*   **Atmospheric Scattering:** Sky color dynamically transitions from Earth-blue to Space-black based on altitude.
-*   **Glassmorphism HUD:** New telemetry dashboard with graphical fuel/thrust gauges and digital inputs.
-*   **Sprite Rendering:** Support for sprite-based rockets (with procedural fallbacks if assets are missing).
+## 🛠 Technologies Used
 
----
+- **HTML5 Canvas:** Core rendering engine for all 2D simulation graphics and the Navball UI.
+- **Vanilla JavaScript (ES6+):** Complete logic, physics simulation, component architecture, and object-oriented design.
+- **Web Audio API & SpeechSynthesis:** Handles complex dynamic engine sounds and mission control voiceovers.
+- **CSS3 / Glassmorphism:** Provides a modern, responsive, and immersive telemetry dashboard interface.
 
-## 🎮 Mission Controls
+## 🚀 Installation & Requirements
 
-### Flight
-*   **SPACE**: Initiate Launch Sequence (Auto-Countdown)
-*   **S**: Stage Separation (Manual trigger)
-*   **P**: Deploy Payload (Fairings & Satellite)
-*   **ESC**: Reset Simulation
+This project is built purely with web standards and has **zero dependencies**. No Node.js or build tools are required.
 
-### Guidance & Navigation
-*   **ARROW KEYS**:
-    *   `UP/DOWN`: Throttle Control
-    *   `LEFT/RIGHT`: Thrust Vectoring (Gimbal)
-*   **A**: Toggle **PID Autopilot** (Auto-Land Booster)
-*   **X**: Cut Engine (Instant 0% throttle)
+### Prerequisites
+- Any modern web browser (Chrome, Firefox, Safari, Edge)
 
-### Camera & Tools
-*   **1**: Tracking Cam (Default)
-*   **2**: Onboard Rocket Cam (Cinematic)
-*   **3**: Tower Cam (Fixed)
-*   **M**: **Orbital Map Mode**
-*   **B**: Switch Focus to Booster
-*   **]**: Increase Time Warp (up to 10x)
-*   **[**: Decrease Time Warp
-*   **\**: Reset Time Scale
+### Setup Steps
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/dhaatrik/rocket-launch-simulation.git
+   ```
+2. **Navigate to the directory:**
+   ```bash
+   cd rocket-launch-simulation
+   ```
+3. **Run the simulation:**
+   Simply open `index.html` in your web browser. You can double-click the file in your file explorer or serve it via a simple local server if preferred:
+   ```bash
+   npx serve .
+   ```
 
-## 🛠️ Installation & Usage
+## 🎮 Usage Instructions & Examples
 
-1.  **Clone or Download** this repository.
-2.  **Open** `index.html` in any modern web browser.
-3.  **Click** "Enter Mission Control" to start the audio engine and simulation.
+Upon opening the simulation, click **"Enter Mission Control"** to initialize the web audio context and begin. 
 
-## 📂 Project Structure
+### Customizing the Rocket
+Before launching, use the VAB menu on the left side of the screen to adjust the rocket's parameters:
+- Slide **Fuel Mass** to optimize delta-V.
+- Modify **Thrust** for better TWR (Thrust-to-Weight Ratio).
 
-*   `index.html`: UI structure, Navball canvas, VAB modal, and HUD.
-*   `script.js`:
-    *   **RK4 Solver**: Advanced physics integration.
-    *   **PIDController**: Control theory implementation for auto-landing.
-    *   **AudioEngine**: Web Audio API & SpeechSynthesis.
-    *   **Renderer**: Canvas drawing with Bloom and Particle systems.
-*   `style.css`: Glass-morphism UI styling and animations.
+### Flight Controls
+| Action | Keybinding |
+| :--- | :--- |
+| **Initiate Launch Sequence** | `SPACE` |
+| **Stage Separation** | `S` |
+| **Deploy Payload** | `P` |
+| **Throttle Up / Down** | `UP` / `DOWN` Arrows |
+| **Gimbal (Steering)** | `LEFT` / `RIGHT` Arrows |
+| **Toggle PID Autopilot** | `A` (Auto-Lands Booster) |
+| **Cut Engine** | `X` |
 
-## 💻 Customization
+### Views and Time
+| View / Tool | Keybinding |
+| :--- | :--- |
+| **Camera Modes** | `1` (Tracking), `2` (Onboard), `3` (Tower) |
+| **Orbital Map** | `M` |
+| **Focus Booster** | `B` |
+| **Time Warp Control** | `]` (Increase), `[` (Decrease), `\` (Reset) |
 
-You can now customize the rocket directly in the **VAB Menu** before launch!
-For deeper changes, edit the constants in `script.js`:
+### Code Example: Tweaking the Atmosphere
+If you want to modify core constants, open the relevant JavaScript file to adjust the environmental constants:
 
 ```javascript
-const SCALE_HEIGHT = 7000;      // Atmosphere height
+// Example modification for a denser atmosphere
+const SCALE_HEIGHT = 8000;      // Adjust scale height representing atmospheric falloff
 const ISP_VAC_BOOSTER = 311;    // Engine efficiency (Vacuum)
-const R_EARTH = 6371000;        // Planet Radius
+const R_EARTH = 6371000;        // Planet Radius in meters
 ```
+
+## 🧪 Testing Instructions
+
+As a pure Vanilla JavaScript and HTML5 application, automated unit testing frameworks (like Jest or Mocha) are not currently bundled. Testing is performed manually by running the application in a browser environment.
+
+To test changes:
+1. Start the simulation.
+2. Launch the rocket (`SPACE`) and observe the RK4 trajectory.
+3. Switch to map view (`M`) and verify the Keplerian prediction curve remains stable under 10x time warp (`]`).
+4. Engage the PID auto-lander (`A`) to verify descent logic and suicide burn calculations.
+
+*Contributors are welcome to introduce an automated test suite (e.g., Jest for the RK4 and PID constants) in the future!*
+
+## 🤝 Contribution Guidelines
+
+We welcome contributions from the community! To ensure a smooth collaboration process:
+
+1. **Fork the Project**
+2. **Create your Feature Branch** (`git checkout -b feature/AmazingFeature`)
+3. **Commit your Changes** (`git commit -m 'Add some AmazingFeature'`)
+4. **Push to the Branch** (`git push origin feature/AmazingFeature`)
+5. **Open a Pull Request**
+
+Please read and adhere to our [Code of Conduct](CODE_OF_CONDUCT.md) (Standard Contributor Covenant) when participating in this project.
+
+## 👨‍💻 Author
+
+**Dhaatrik Chowdhury**
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
