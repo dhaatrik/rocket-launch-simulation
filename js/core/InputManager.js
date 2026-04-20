@@ -24,20 +24,38 @@ class InputManager {
 
     initListeners() {
         window.addEventListener('keydown', (e) => {
+            if ([' ', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+                e.preventDefault();
+            }
+
             this.keys[e.key] = true;
             this.updateActionsFromKeys();
 
             // Toggles/One-shots
             if (e.key === 'm' || e.key === 'M') this.actions.MAP_MODE = !this.actions.MAP_MODE;
             if (e.key === 't' || e.key === 'T') this.actions.SAS_TOGGLE = true;
+            
+            // UI Hooks Camera & Autopilot
+            if (e.key === '1') document.querySelector('#camera-panel button[data-cam="1"]')?.click();
+            if (e.key === '2') document.querySelector('#camera-panel button[data-cam="2"]')?.click();
+            if (e.key === '3') document.querySelector('#camera-panel button[data-cam="3"]')?.click();
+            if (e.key === 'a' || e.key === 'A') document.getElementById('autopilot-btn')?.click();
+
+            // Launch / Stage distinction
+            if (e.key === ' ') {
+                const launchBtn = document.getElementById('launch-btn');
+                if (launchBtn && launchBtn.textContent.includes('INITIATE LAUNCH')) {
+                    launchBtn.click();
+                } else {
+                    this.actions.STAGE = true;
+                }
+            }
         });
 
         window.addEventListener('keyup', (e) => {
             this.keys[e.key] = false;
             this.updateActionsFromKeys();
-            if (e.key === ' ') this.actions.STAGE = false; // Reset stage on release? 
-            // Or better: Stage triggers on DOWN, resets immediately after handled?
-            // For now, simple mapping.
+            if (e.key === ' ') this.actions.STAGE = false; 
             if (e.key === 't' || e.key === 'T') this.actions.SAS_TOGGLE = false;
         });
 
@@ -62,14 +80,14 @@ class InputManager {
 
     updateActionsFromKeys() {
         // Continuous stateMap
-        this.actions.THROTTLE_UP = this.keys['Shift'];
-        this.actions.THROTTLE_DOWN = this.keys['Control'];
+        this.actions.THROTTLE_UP = this.keys['ArrowUp'];
+        this.actions.THROTTLE_DOWN = this.keys['ArrowDown'];
         this.actions.YAW_LEFT = this.keys['ArrowLeft'];
         this.actions.YAW_RIGHT = this.keys['ArrowRight'];
-        this.actions.STAGE = this.keys[' '];
+        this.actions.STAGE = this.keys[' '] || this.keys['s'] || this.keys['S'];
         this.actions.CUT_ENGINE = this.keys['x'] || this.keys['X'];
-        this.actions.TIME_WARP_UP = this.keys['.'] || this.keys['>'];
-        this.actions.TIME_WARP_DOWN = this.keys[','] || this.keys['<'];
+        this.actions.TIME_WARP_UP = this.keys[']'];
+        this.actions.TIME_WARP_DOWN = this.keys['['];
     }
 
     handleJoystick(e, active) {
